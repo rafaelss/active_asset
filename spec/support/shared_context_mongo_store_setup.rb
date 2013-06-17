@@ -1,5 +1,5 @@
 shared_context "mongo #store setup" do
-  let(:image) { File.open("test/fixtures/image.gif", "r") }
+  let(:image) { File.open("spec/fixtures/image.gif", "r") }
 
   before do
     grid.
