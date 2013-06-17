@@ -3,30 +3,40 @@ require File.join(Gem::Specification.find_by_name("mongo").gem_dir, "lib/mongo")
 module ActiveAsset
   module Storage
     class Mongo
-      def store(file)
-        grid.put(file).to_s
+      def initialize
+        @connections = {}
+        @dbs = {}
+        @grids = {}
       end
 
-      def retrieve(uid)
-        grid.get(uid)
+      def store(file, options = {})
+        grid(options.delete(:grid), options).put(file).to_s
       end
 
-      def destroy(uid)
-        grid.delete(uid)
+      def retrieve(uid, options = {})
+        grid(options.delete(:grid), options).get(uid)
+      end
+
+      def destroy(uid, options = {})
+        grid(options.delete(:grid), options).delete(uid)
       end
 
       protected
 
-      def grid
-        @grid ||= ::Mongo::Grid.new(db)
+      def grid(name, options)
+        db = database(options.delete(:database), options)
+        ::Mongo::Grid.new(db, name || "fs")
       end
 
-      def db
-        @db ||= connection.db("assets")
+      def database(name, options)
+        connection(options.delete(:host), options.delete(:port)).
+          db(name || "active_asset")
       end
 
-      def connection
-        @connection ||= ::Mongo::Connection.new("localhost", 27017)
+      def connection(host, port)
+        host ||= "localhost"
+        port ||= 27017
+        @connections["#{host}:#{port}"] ||= ::Mongo::Connection.new(host, port)
       end
     end
   end

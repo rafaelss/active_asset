@@ -2,17 +2,23 @@ require "spec_helper"
 require "active_asset/storage/mongo"
 
 describe ActiveAsset::Storage::Mongo, "#retrieve" do
-  include_context "default mongo connection"
+  context "with default options" do
+    include_context "default mongo connection"
+    include_context "mongo #retrieve setup"
 
-  it "retrieves the file from default grid" do
-    image = File.open("test/fixtures/image.gif", "r")
+    it "retrieves the file from default grid" do
+      image = subject.retrieve("1234")
+      expect(image).to eq(image)
+    end
+  end
 
-    grid.
-      should_receive(:get).
-      with("1234").
-      and_return(image)
+  context "with custom options" do
+    include_context "custom mongo connection"
+    include_context "mongo #retrieve setup"
 
-    image = subject.retrieve("1234")
-    expect(image).to eq(image)
+    it "retrieves the file from custom grid" do
+      image = subject.retrieve("1234", :host => "123.456.789.012", :port => 71072, :database => "images", :grid => "mysite")
+      expect(image).to eq(image)
+    end
   end
 end

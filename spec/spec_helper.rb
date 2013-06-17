@@ -1,4 +1,5 @@
 require "bundler/setup"
+require "active_asset"
 
 Dir["./spec/support/**/*.rb"].sort.each { |f| require f }
 

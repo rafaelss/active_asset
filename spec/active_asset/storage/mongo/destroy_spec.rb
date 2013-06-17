@@ -2,15 +2,23 @@ require "spec_helper"
 require "active_asset/storage/mongo"
 
 describe ActiveAsset::Storage::Mongo, "#destroy" do
-  include_context "default mongo connection"
+  context "with default options" do
+    include_context "default mongo connection"
+    include_context "mongo #destroy setup"
 
-  it "destroy the file in default grid" do
-    grid.
-      should_receive(:delete).
-      with("1234").
-      and_return({})
+    it "destroy the file in default grid" do
+      hash = subject.destroy("1234")
+      expect(hash).to eq(hash)
+    end
+  end
 
-    hash = subject.destroy("1234")
-    expect(hash).to eq(hash)
+  context "with custom options" do
+    include_context "custom mongo connection"
+    include_context "mongo #destroy setup"
+
+    it "stores the file in custom grid" do
+      uid = subject.destroy("1234", :host => "123.456.789.012", :port => 71072, :database => "images", :grid => "mysite")
+      expect(hash).to eq(hash)
+    end
   end
 end

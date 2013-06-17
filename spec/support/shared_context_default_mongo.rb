@@ -15,14 +15,14 @@ shared_context "default mongo connection" do
 
     connection.
       should_receive(:db).
-      with("assets").
+      with("active_asset").
       and_return(db)
 
     stub_const("Mongo::Grid", grid_class)
 
     grid_class.
       should_receive(:new).
-      with(db).
+      with(db, "fs").
       and_return(grid)
   end
 end
