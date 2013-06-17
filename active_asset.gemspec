@@ -22,4 +22,6 @@ Gem::Specification.new do |spec|
   spec.add_development_dependency "rake"
   spec.add_development_dependency "rspec", "2.14.0.rc1"
   spec.add_development_dependency "mongo", "~> 1.9.0"
+  spec.add_development_dependency "activerecord", "~> 3.2.13"
+  spec.add_development_dependency "sqlite3", "~> 1.3.7"
 end
