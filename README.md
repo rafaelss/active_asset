@@ -1,6 +1,6 @@
 # ActiveAsset
 
-TODO: Write a gem description
+ActiveAsset is a Rack application that can process any kind of file on-the-fly, currently files can only be stored in a mongodb database.
 
 ## Installation
 
