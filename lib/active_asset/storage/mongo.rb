@@ -16,7 +16,7 @@ module ActiveAsset
       def retrieve(uid, options = {})
         grid(options.delete(:grid), options).get(BSON::ObjectId.from_string(uid))
       rescue ::Mongo::GridFileNotFound
-        raise NotFound
+        raise NotFound, "File not found"
       end
 
       def destroy(uid, options = {})
