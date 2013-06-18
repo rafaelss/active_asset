@@ -5,6 +5,6 @@ shared_context "mongo #store setup" do
     grid.
       should_receive(:put).
       with(image).
-      and_return(double("object_id", :to_s => "1234"))
+      and_return(double("objectid", :to_s => "51bf98def4e3524da6000001"))
   end
 end

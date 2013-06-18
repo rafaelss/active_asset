@@ -7,7 +7,7 @@ describe ActiveAsset::Storage::Mongo, "#retrieve" do
     include_context "mongo #retrieve setup"
 
     it "retrieves the file from default grid" do
-      image = subject.retrieve("1234")
+      image = subject.retrieve("51bf98def4e3524da6000001")
       expect(image).to eq(image)
     end
   end
@@ -17,7 +17,7 @@ describe ActiveAsset::Storage::Mongo, "#retrieve" do
     include_context "mongo #retrieve setup"
 
     it "retrieves the file from custom grid" do
-      image = subject.retrieve("1234", :host => "123.456.789.012", :port => 71072, :database => "images", :grid => "mysite")
+      image = subject.retrieve("51bf98def4e3524da6000001", :host => "123.456.789.012", :port => 71072, :database => "images", :grid => "mysite")
       expect(image).to eq(image)
     end
   end

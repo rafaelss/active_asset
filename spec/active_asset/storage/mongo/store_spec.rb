@@ -8,7 +8,7 @@ describe ActiveAsset::Storage::Mongo, "#store" do
 
     it "stores the file in default grid" do
       uid = subject.store(image)
-      expect(uid).to eq("1234")
+      expect(uid).to eq("51bf98def4e3524da6000001")
     end
   end
 
@@ -18,7 +18,7 @@ describe ActiveAsset::Storage::Mongo, "#store" do
 
     it "stores the file in custom grid" do
       uid = subject.store(image, :host => "123.456.789.012", :port => 71072, :database => "images", :grid => "mysite")
-      expect(uid).to eq("1234")
+      expect(uid).to eq("51bf98def4e3524da6000001")
     end
   end
 end

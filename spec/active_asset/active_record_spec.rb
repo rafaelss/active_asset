@@ -29,27 +29,29 @@ describe ActiveAsset::ActiveRecord do
       grid.
         should_receive(:put).
         with(image).
-        and_return(double("object_id", :to_s => "1234"))
+        and_return("51bf98def4e3524da6000001")
 
       model.file = image
       model.save
 
-      expect(model.file_uid).to eq("1234")
+      expect(model.file_uid).to eq("51bf98def4e3524da6000001")
     end
   end
 
   context "destroying" do
     include_context "default mongo connection"
+    include_context "objectid"
+
     let(:model) { User.first }
 
     before do
-      ActiveRecord::Base.connection.insert("INSERT INTO users (name, file_uid) VALUES ('Fulano', '1234')")
+      ActiveRecord::Base.connection.insert("INSERT INTO users (name, file_uid) VALUES ('Fulano', '51bf98def4e3524da6000001')")
     end
 
     it "destroys the file in mongo" do
       grid.
         should_receive(:delete).
-        with("1234").
+        with(objectid).
         and_return("err" => nil)
 
       model.destroy

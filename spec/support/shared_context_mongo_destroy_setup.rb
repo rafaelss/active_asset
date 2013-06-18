@@ -1,8 +1,10 @@
 shared_context "mongo #destroy setup" do
+  include_context "objectid"
+
   before do
     grid.
       should_receive(:delete).
-      with("1234").
+      with(objectid).
       and_return({ "err" => nil })
   end
 end

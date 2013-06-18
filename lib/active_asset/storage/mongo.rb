@@ -14,11 +14,13 @@ module ActiveAsset
       end
 
       def retrieve(uid, options = {})
-        grid(options.delete(:grid), options).get(uid)
+        grid(options.delete(:grid), options).get(BSON::ObjectId.from_string(uid))
+      rescue ::Mongo::GridFileNotFound
+        raise NotFound
       end
 
       def destroy(uid, options = {})
-        grid(options.delete(:grid), options).delete(uid)
+        grid(options.delete(:grid), options).delete(BSON::ObjectId.from_string(uid))
       end
 
       protected
