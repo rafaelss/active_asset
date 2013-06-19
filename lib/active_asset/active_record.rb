@@ -10,7 +10,7 @@ module ActiveAsset
       attr_accessor :assets_mounted
 
       def mount(name, &block)
-        setup_accessor(name)
+        setup_accessor(name, &block)
 
         before_save :save_assets
         before_destroy :destroy_assets
@@ -21,7 +21,7 @@ module ActiveAsset
 
       protected
 
-      def setup_accessor(name)
+      def setup_accessor(name, &block)
         define_method("#{name}=") do |asset|
           instance_variable_set("@#{name}", asset)
         end
@@ -31,9 +31,11 @@ module ActiveAsset
           return asset if asset
 
           if send("#{name}_uid?")
-            asset = asset_storage.retrieve(send("#{name}_uid"))
+            options = block.respond_to?(:call) ? block.call : {}
+            asset = asset_storage.retrieve(send("#{name}_uid"), options)
             send("#{name}=", asset)
           end
+
           asset
         end
       end

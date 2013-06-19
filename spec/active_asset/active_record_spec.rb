@@ -20,7 +20,7 @@ describe ActiveAsset::ActiveRecord do
 
   let(:image) { File.open("spec/fixtures/image.gif") }
 
-  it "generates accessor in the class" do
+  it "generates accessor in the model" do
     model.avatar = image
     expect(model.avatar).to eq(image)
   end
@@ -39,6 +39,11 @@ describe ActiveAsset::ActiveRecord do
     let(:options) { { :grid => "bar" } }
     let(:model) { Shop.new }
     let(:mount) { :logo }
+
+    it "generates accessor in the model" do
+      model.logo = image
+      expect(model.logo).to eq(image)
+    end
 
     it_behaves_like "a savable active record model with files"
 
