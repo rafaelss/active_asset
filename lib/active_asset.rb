@@ -5,7 +5,7 @@ require "active_asset/serializer"
 
 module ActiveAsset
   def self.configuration
-    @configuration || Configuration.new
+    @configuration ||= Configuration.new
   end
 
   def self.configure
