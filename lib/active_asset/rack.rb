@@ -9,9 +9,6 @@ module ActiveAsset
       begin
         hash = decode_h_param(env)
         set_response_body(response, hash)
-
-        response["ETag"] = digest_body(response.body)
-        response["Cache-Control"] = "public, max-age=3600"
       rescue Serializer::DecodeError
         response.status = 400
         response.body = ["Bad Request"]
