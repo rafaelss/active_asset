@@ -15,8 +15,11 @@ module ActiveAsset
         before_save :save_assets
         before_destroy :destroy_assets
 
-        self.assets_mounted ||= Set.new
-        assets_mounted << name
+        options = {}
+        options = yield if block_given?
+
+        self.assets_mounted ||= {}
+        assets_mounted[name] = options
       end
 
       protected
@@ -46,21 +49,21 @@ module ActiveAsset
     end
 
     def save_assets
-      each_mount do |mount, asset|
-        send("#{mount}_uid=", asset_storage.store(asset))
+      each_mount do |mount, options, asset|
+        send("#{mount}_uid=", asset_storage.store(asset, options))
       end
     end
 
     def destroy_assets
-      each_mount do |mount, asset|
-        asset_storage.destroy(send("#{mount}_uid"))
+      each_mount do |mount, options, asset|
+        asset_storage.destroy(send("#{mount}_uid"), options)
         send("#{mount}_uid=", nil)
       end
     end
 
     def each_mount
-      self.class.assets_mounted.each do |mount|
-        yield mount, instance_variable_get("@#{mount}")
+      self.class.assets_mounted.each do |mount, options|
+        yield mount, options, instance_variable_get("@#{mount}")
       end
     end
   end
