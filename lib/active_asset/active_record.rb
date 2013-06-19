@@ -9,17 +9,14 @@ module ActiveAsset
     module ClassMethods
       attr_accessor :assets_mounted
 
-      def mount(name)
+      def mount(name, &block)
         setup_accessor(name)
 
         before_save :save_assets
         before_destroy :destroy_assets
 
-        options = {}
-        options = yield if block_given?
-
         self.assets_mounted ||= {}
-        assets_mounted[name] = options
+        assets_mounted[name] = block
       end
 
       protected
@@ -62,7 +59,8 @@ module ActiveAsset
     end
 
     def each_mount
-      self.class.assets_mounted.each do |mount, options|
+      self.class.assets_mounted.each do |mount, block|
+        options = block.respond_to?(:call) ? block.call : {}
         yield mount, options, instance_variable_get("@#{mount}")
       end
     end
