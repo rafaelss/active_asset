@@ -12,8 +12,8 @@ module ActiveAsset
 
     def decode(string, password)
       JSON.load(AESCrypt.decrypt(string, password))
-    rescue OpenSSL::Cipher::CipherError
-      raise DecodeError, "The given string can't be decrypted, probably by an invalid password"
+    rescue ArgumentError, OpenSSL::Cipher::CipherError
+      raise DecodeError, "The given string can't be decrypted, probably because string is empty or password is invalid"
     end
   end
 end
