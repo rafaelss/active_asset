@@ -21,7 +21,6 @@ describe ActiveAsset::Rack, :rack do
     it "returns 200 if file is found" do
       get "/foo.png?h=#{encoded}"
 
-      puts last_response.body
       expect(last_response).to be_ok
     end
   end
