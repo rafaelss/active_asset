@@ -47,6 +47,7 @@ module ActiveAsset
 
       if hash["d"] =~ /\dx\d/
         image = MiniMagick::Image.read(io)
+        image.strip
         image.resize(hash["d"])
         image.write(response)
       else
