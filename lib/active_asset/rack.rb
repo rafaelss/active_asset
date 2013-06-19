@@ -1,4 +1,4 @@
-require "active_asset/storage"
+require "active_asset"
 require "mini_magick"
 
 module ActiveAsset
