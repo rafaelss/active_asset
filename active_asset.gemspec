@@ -18,6 +18,7 @@ Gem::Specification.new do |spec|
   spec.test_files    = spec.files.grep(%r{^(test|spec|features)/})
   spec.require_paths = ["lib"]
 
+  spec.add_dependency "mini_magick", "~> 3.6.0"
   spec.add_dependency "aescrypt", "~> 1.0.0"
 
   spec.add_development_dependency "bundler", "~> 1.3"
@@ -26,4 +27,5 @@ Gem::Specification.new do |spec|
   spec.add_development_dependency "mongo", "~> 1.9.0"
   spec.add_development_dependency "activerecord", "~> 3.2.13"
   spec.add_development_dependency "sqlite3", "~> 1.3.7"
+  spec.add_development_dependency "rack-test", "~> 0.6.2"
 end

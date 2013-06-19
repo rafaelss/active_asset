@@ -9,6 +9,9 @@ RSpec.configure do |config|
   config.filter_run :focus
   config.order = "random"
 
+  require "rack/test"
+  config.include Rack::Test::Methods, :rack
+
   config.after do
     ActiveAsset.instance_variable_set(:@configuration, nil) # to not interfere on other specs
   end
