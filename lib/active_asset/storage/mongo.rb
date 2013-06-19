@@ -14,13 +14,13 @@ module ActiveAsset
       end
 
       def retrieve(uid, options = {})
-        grid(options.delete(:grid), options).get(BSON::ObjectId.from_string(uid))
+        grid(options.delete(:grid), options).get(to_object_id(uid))
       rescue ::Mongo::GridFileNotFound
         raise NotFound, "File not found"
       end
 
       def destroy(uid, options = {})
-        grid(options.delete(:grid), options).delete(BSON::ObjectId.from_string(uid))
+        grid(options.delete(:grid), options).delete(to_object_id(uid))
       end
 
       protected
@@ -39,6 +39,10 @@ module ActiveAsset
         host ||= "localhost"
         port ||= 27017
         @connections["#{host}:#{port}"] ||= ::Mongo::Connection.new(host, port)
+      end
+
+      def to_object_id(str)
+        BSON::ObjectId.from_string(str)
       end
     end
   end
